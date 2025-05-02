@@ -41,7 +41,7 @@ const Product = () => {
         <img src={avatar} />
         <span>{product.seller}</span>
       </div>
-      <div id="contBox">
+      <div id="contentsBox">
         <div id="name">{product.name}</div>
         <div id="status">{product.price}원</div>
         <div id="createdAt">2025년 05월 02일</div>
