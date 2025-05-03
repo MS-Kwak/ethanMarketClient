@@ -62,6 +62,10 @@
 }
 #description {
   margin-top: 16px;
+  font-size: 16px;
+}
+#purchaseButton {
+  margin: 16px 0;
 }
 
 /* UploadPage.jsx */

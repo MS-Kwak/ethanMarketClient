@@ -7,10 +7,11 @@ import { API_URL } from '../util/constants';
 
 dayjs.extend(relativeTime);
 
-const ProductList = ({ id, imageUrl, name, price, seller, createdAt }) => {
+const ProductList = ({ id, imageUrl, name, price, seller, createdAt, soldout }) => {
   return (
     <div className="productList">
       <div className="product-card">
+        {soldout === 1 && <div className="product-blur" />}
         <Link className="product-link" to={`/products/${id}`}>
           <div>
             <img className="product-img" src={`${API_URL}/${imageUrl}`} />
