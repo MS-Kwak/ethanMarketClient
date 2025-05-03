@@ -17,3 +17,9 @@
   width: 128px;
   height: 36px;
 }
+
+@media screen and (max-width: 400px) {
+  #Header {
+    padding: 0 8px;
+  }
+}
