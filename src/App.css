@@ -88,6 +88,14 @@
   font-size: 14px;
   color: rgb(195, 194, 204);
 }
+
+#uploadImg {
+  width: 200px;
+  height: 200px;
+  margin-left: 16px;
+  object-fit: contain;
+}
+
 .upload-name {
   width: 300px;
 }
@@ -102,5 +110,6 @@
   background-color: rgb(30, 120, 255);
   color: #fff;
   border: none;
+  border-radius: 0;
   margin-top: 16px;
 }

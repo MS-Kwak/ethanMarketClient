@@ -1,9 +1,43 @@
-import { Button, Divider, Form, Input, InputNumber, Upload } from 'antd';
+import { Button, Divider, Form, Input, InputNumber, message, Upload } from 'antd';
 import camera from './../assets/camera.png';
+import { useState } from 'react';
+import { API_URL } from '../util/constants';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UploadPage = () => {
+  const [imgUrl, setImgUrl] = useState(null);
+  const nav = useNavigate();
+
   const onsubmit = (values) => {
-    console.log(values);
+    console.log('등록하기 버튼 클릭: ', values);
+    axios
+      .post(`${API_URL}/products`, {
+        name: values.name,
+        description: values.description,
+        seller: values.seller,
+        price: Number(values.price),
+        imageUrl: imgUrl,
+      })
+      .then((result) => {
+        console.log('result: ', result);
+        nav('/', { replace: true });
+      })
+      .catch((error) => {
+        console.error(error);
+        message.error(`에러가 발생했습니다. ${error.message}`);
+      });
+  };
+
+  const onChangeImage = (info) => {
+    if (info.file.status === 'uploading') {
+      return;
+    }
+    if (info.file.status === 'done') {
+      const response = info.file.response;
+      const imageUrl = response.imageUrl;
+      setImgUrl(imageUrl);
+    }
   };
 
   return (
@@ -11,7 +45,22 @@ const UploadPage = () => {
       <Form name="basic" onFinish={onsubmit}>
         {/* name은 onSubmit에 들어가는 key값이 될거에요~ */}
         <Form.Item name="upload" label={<div className="upload-label">상품 사진</div>}>
-          <Upload name="image" listType="picture" showUploadList={false}></Upload>
+          <Upload
+            name="image"
+            action={`${API_URL}/src/assets`}
+            listType="picture"
+            showUploadList={false}
+            onChange={onChangeImage}
+          >
+            {imgUrl ? (
+              <img id="uploadImg" src={`${API_URL}/${imgUrl}`} />
+            ) : (
+              <div id="uploadImgPlaceholder">
+                <img src={camera} />
+                <span>이미지를 업로드 해주세요</span>
+              </div>
+            )}
+          </Upload>
         </Form.Item>
 
         <Divider />
@@ -72,7 +121,7 @@ const UploadPage = () => {
 
         <Form.Item>
           <Button id="submitButton" size="large" htmlType="submit">
-            등록하기
+            상품 등록하기
           </Button>
         </Form.Item>
       </Form>
